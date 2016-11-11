@@ -8,6 +8,25 @@ This script creates such a file from an image database folder, generating class 
 
 It is even able to split up the images between **training** and **test set** by an arbitrary **ratio**.
 
+## Data
+
+The directory structure of your database should be like this
+
+```
+Database
+	|- Class_1
+		|- Image_1
+		|- Image_2
+			...
+			
+	|- Class_2
+		|- Image_1
+		|- Image_2
+		|- Image_3
+			...
+	...
+```
+
 ## Usage
 
 The command line interface is simple
@@ -27,6 +46,7 @@ This will generate a file called `output.txt` containing the path to every image
 |  --table  |      -ta      | string |   *none*   | File listing the class tables along with the classnames                                  |
 |  --ration |       -r      |  float |     0.8    | The ration to between training and test set images. Must be between 0 and 1.             |
 | --verbose |       -v      |   int  |      1     | The amount of verbosity. 0 = silent, 1 = output summary (default), 2 = processing output |
+
 
 ## Examples
 
