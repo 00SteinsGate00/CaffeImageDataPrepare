@@ -73,10 +73,10 @@ caffe_image_prep 101_ObjectCategories --train data_train.txt --test data_test.tx
 [Download](https://github.com/00SteinsGate00/KodiTVShowNamer/archive/master.zip) the repository or clone it using
 
 ```
-git clone https://github.com/00SteinsGate00/KodiTVShowNamer.git
+git clone https://github.com/00SteinsGate00/CaffeImageDataPrepare.git
 ```
 
-Follow the script to some place inside your `$PATH`, for example `/usr/bin` and set the correct permissions.
+Copy the script to some place inside your `$PATH`, for example `/usr/bin` and set the correct permissions.
 
 ```
 sudo cp caffe_image_prepare.py /usr/bin/caffe_image_prep
