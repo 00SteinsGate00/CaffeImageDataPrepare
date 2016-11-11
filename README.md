@@ -1,6 +1,6 @@
-# Caffe Image Database Prepare
+# Caffe Image Datbase Prepare
 
-When you download image datasets from the internet, they often come separated into folders per class.
+When you download image datasets from the internet, they often come seperated into folders per class.
 
 [Caffe](http://caffe.berkeleyvision.org) requires you to input the files as one text file, containing the path to the image and the class label (as a number).
 
@@ -24,6 +24,7 @@ This will generate a file called `output.txt` containing the path to every image
 |:---------:|:-------------:|:------:|------------|:----------------------------------------------------------------------------------------:|
 |  --train  |       -t      | string | output.txt | The output file for the training set                                                     |
 |   --test  |       -T      | string |   *none*   | The output file for the test set                                                         |
+|  --table  |      -ta      | string |   *none*   | File listing the class tables along with the classnames                                  |
 |  --ration |       -r      |  float |     0.8    | The ration to between training and test set images. Must be between 0 and 1.             |
 | --verbose |       -v      |   int  |      1     | The amount of verbosity. 0 = silent, 1 = output summary (default), 2 = processing output |
 
@@ -40,7 +41,14 @@ The following will split the images into a *training* and a *test set* by a rati
 caffe_image_prep 101_ObjectCategories --train data_train.txt --test data_test.txt --ration 0.75
 ```
 
-## Install
+The following will output both a *training* and a *test set* with the default split ration of **0.8**. Furthermore it will create a table file `data_table.txt` listing the class labels (numbers between 0 and n) together with the class names (derived from the foldernames).
+
+```
+caffe_image_prep 101_ObjectCategories --train data_train.txt --test data_test.txt --table data_table.txt
+```
+
+
+## Install 
 
 [Download](https://github.com/00SteinsGate00/KodiTVShowNamer/archive/master.zip) the repository or clone it using
 
@@ -58,3 +66,4 @@ sudo chmod +x /usr/bin/caffe_image_prep
 ## Licence
 
 [MIT Licence](LICENCE.md)
+

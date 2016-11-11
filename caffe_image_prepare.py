@@ -25,6 +25,9 @@ ratio = 0.8
 # amount of console output
 verbosity = 1
 
+# output file for table
+table_output = None
+
 
 
 # ################ #
@@ -44,6 +47,7 @@ parser.add_argument("-t", "--train", help="The outputfile for the training set")
 parser.add_argument("-T", "--test", help="The outputfile for the test set")
 parser.add_argument("-r", "--ratio", help="Ration to split between training and test set. Default is 0.8")
 parser.add_argument("-v", "--verbose", default="1", help="Verbose level. 0 - silent, 1 - summary (default), 2 - small step output")
+parser.add_argument("-ta", "--table", help="Output table file which lists the classname to every class label")
 arguments = parser.parse_args()
 
 
@@ -103,7 +107,9 @@ except ValueError:
     print ("'%s' is non of the following: [0, 1, 2]" % arguments.verbose)
     sys.exit()
 
-
+# table output
+if(arguments.table):
+    table_output = os.path.abspath(arguments.table)
 
 # ############### #
 # Data Processing #
@@ -113,6 +119,7 @@ except ValueError:
 train_file = open(train_output, 'w')
 if(test_output):
     test_file = open(test_output, 'w')
+table_file = open(table_output, 'w')
 
 # counters
 class_label = 0
@@ -136,6 +143,10 @@ for class_name in os.listdir(data_path):
 
         # list of class images
         images = os.listdir(class_dir)
+
+        # add it to the table file if option was set
+        if(table_output):
+            table_file.write("%d %s\n" % (class_label, class_name))
 
         # process every image
         for image in images:
@@ -175,6 +186,8 @@ for class_name in os.listdir(data_path):
 train_file.close()
 if(test_output):
     test_file.close()
+if(table_output):
+    table_file.close()
 
 # ############## #
 # Summary Output #
@@ -190,4 +203,6 @@ if(verbosity != 0):
         print ("Train/Test Ratio: %d/%d" % (ratio*10, (10-ratio*10)))
         print ("Test Output: '%s'" % test_output)
     print ("Training Output: '%s'" % train_output)
+    if(table_output):
+        print ("Table Output: '%s'" % table_output)
     print ("----------------------------")
