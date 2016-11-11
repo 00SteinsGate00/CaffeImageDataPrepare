@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
 import argparse
+import math
 import os
 import sys
+
 
 # ###### #
 # Config #
@@ -20,7 +22,8 @@ test_output = None
 # ratio to split traning and test set
 ratio = 0.8
 
-
+# amount of console output
+verbosity = 1
 
 # ################ #
 # Argument Parsing #
@@ -38,6 +41,7 @@ parser.add_argument("data", help="Directory with the image data")
 parser.add_argument("-t", "--train", help="The outputfile for the training set")
 parser.add_argument("-T", "--test", help="The outputfile for the test set")
 parser.add_argument("-r", "--ratio", help="Ration to split between training and test set. Default is 0.8")
+parser.add_argument("-v", "--verbose", default="1", help="Verbose level. 0 - silent, 1 - summary (default), 2 - small step output")
 arguments = parser.parse_args()
 
 
@@ -85,7 +89,17 @@ if(arguments.ratio):
         print ("'%s' is not a floating point number between 0 and 1" % arguments.ratio)
         sys.exit()
 
-
+try:
+    # cast to int
+    verbosity = int(arguments.verbose)
+    # check boundaries (0, 1, 2)
+    if(not (verbosity == 0 or verbosity == 1 or verbosity == 2)):
+        print ("'%s' is non of the following: [0, 1, 2]" % arguments.verbose)
+        sys.exit()
+# no int value
+except ValueError:
+    print ("'%s' is non of the following: [0, 1, 2]" % arguments.verbose)
+    sys.exit()
 
 # ############### #
 # Data Processing #
@@ -101,17 +115,26 @@ if(test_output):
 class_label = 0
 count = 0
 
+total_images = 0
+total_classes = 0
+
 # iterate through the whole data directory
-for class_folder in os.listdir(data_path):
+for class_name in os.listdir(data_path):
 
     # build the absolute path for the class directory
-    class_dir = "%s/%s" % (data_path, class_folder)
+    class_dir = "%s/%s" % (data_path, class_name)
 
     # check if it is a directory
     if(os.path.isdir(class_dir)):
 
+        # increment number of classes
+        total_classes += 1
+
+        # list of class images
+        images = os.listdir(class_dir)
+
         # process every image
-        for image in os.listdir(class_dir):
+        for image in images:
 
             # check if a test file is desired
             if(test_output):
@@ -124,16 +147,22 @@ for class_folder in os.listdir(data_path):
                 else:
                     test_file.write("%s/%s %d\n" % (class_dir, image, class_label))
 
-                # increment the count variable
-                count += 1
-
             # no test output
             # put every file in the training set
             else:
                 train_file.write("%s/%s %d\n" % (class_dir, image, class_label))
 
+            # increment the count variable
+            count += 1
+
+        # high verbosity
+        if(verbosity == 2):
+            print ("Handling class '%s' (label: %d, images: %d)" % (class_name, class_label, count))
+
         # increment the class label
         class_label += 1
+        # add to the number of total images
+        total_images += count
         # reset count
         count = 0
 
@@ -142,3 +171,19 @@ for class_folder in os.listdir(data_path):
 train_file.close()
 if(test_output):
     test_file.close()
+
+# ############## #
+# Summary Output #
+# ############## #
+
+# if not set to silent
+if(verbosity != 0):
+
+    print ("----------------------------")
+    print ("#Classes: %d" % total_classes)
+    print ("#Images:  %d" % total_images)
+    if(test_output):
+        print ("Train/Test Ratio: %d/%d" % (ratio*10, (10-ratio*10)))
+        print ("Test Output: '%s'" % test_output)
+    print ("Training Output: '%s'" % train_output)
+    print ("----------------------------")
