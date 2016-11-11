@@ -1,6 +1,6 @@
-# Caffe Image Datbase Prepare
+# Caffe Image Database Prepare
 
-When you download image datasets from the internet, they often come seperated into folders per class.
+When you download image datasets from the internet, they often come separated into folders per class.
 
 [Caffe](http://caffe.berkeleyvision.org) requires you to input the files as one text file, containing the path to the image and the class label (as a number).
 
@@ -40,7 +40,7 @@ The following will split the images into a *training* and a *test set* by a rati
 caffe_image_prep 101_ObjectCategories --train data_train.txt --test data_test.txt --ration 0.75
 ```
 
-## Install 
+## Install
 
 [Download](https://github.com/00SteinsGate00/KodiTVShowNamer/archive/master.zip) the repository or clone it using
 
@@ -58,4 +58,3 @@ sudo chmod +x /usr/bin/caffe_image_prep
 ## Licence
 
 [MIT Licence](LICENCE.md)
-

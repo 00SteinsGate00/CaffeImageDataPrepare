@@ -25,6 +25,8 @@ ratio = 0.8
 # amount of console output
 verbosity = 1
 
+
+
 # ################ #
 # Argument Parsing #
 # ################ #
@@ -101,20 +103,22 @@ except ValueError:
     print ("'%s' is non of the following: [0, 1, 2]" % arguments.verbose)
     sys.exit()
 
+
+
 # ############### #
 # Data Processing #
 # ############### #
 
 # open the files in write mode
-
 train_file = open(train_output, 'w')
-
 if(test_output):
     test_file = open(test_output, 'w')
 
+# counters
 class_label = 0
 count = 0
 
+# summary information
 total_images = 0
 total_classes = 0
 
