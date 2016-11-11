@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import argparse
 import os
 import sys
@@ -82,3 +84,61 @@ if(arguments.ratio):
     except ValueError:
         print ("'%s' is not a floating point number between 0 and 1" % arguments.ratio)
         sys.exit()
+
+
+
+# ############### #
+# Data Processing #
+# ############### #
+
+# open the files in write mode
+
+train_file = open(train_output, 'w')
+
+if(test_output):
+    test_file = open(test_output, 'w')
+
+class_label = 0
+count = 0
+
+# iterate through the whole data directory
+for class_folder in os.listdir(data_path):
+
+    # build the absolute path for the class directory
+    class_dir = "%s/%s" % (data_path, class_folder)
+
+    # check if it is a directory
+    if(os.path.isdir(class_dir)):
+
+        # process every image
+        for image in os.listdir(class_dir):
+
+            # check if a test file is desired
+            if(test_output):
+
+                # check wether the current image belongs to training or test set
+                # training set
+                if(count <= ratio * len(images)):
+                    train_file.write("%s/%s %d\n" % (class_dir, image, class_label))
+                # test set
+                else:
+                    test_file.write("%s/%s %d\n" % (class_dir, image, class_label))
+
+                # increment the count variable
+                count += 1
+
+            # no test output
+            # put every file in the training set
+            else:
+                train_file.write("%s/%s %d\n" % (class_dir, image, class_label))
+
+        # increment the class label
+        class_label += 1
+        # reset count
+        count = 0
+
+
+# close the files
+train_file.close()
+if(test_output):
+    test_file.close()
