@@ -161,24 +161,28 @@ for class_name in os.listdir(data_path):
         # process every image
         for image in images:
 
-            # check if a test file is desired
-            if(test_output):
 
-                # check wether the current image belongs to training or test set
-                # training set
-                if(count <= ratio * len(images)):
-                    train_file.write("%s/%s %d\n" % (class_dir, image, class_label))
-                # test set
+            # OS X Database files
+            if(not image == '.DS_Store'):
+                
+                # check if a test file is desired
+                if(test_output):
+
+                    # check wether the current image belongs to training or test set
+                    # training set
+                    if(count <= ratio * len(images)):
+                        train_file.write("%s/%s %d\n" % (class_dir, image, class_label))
+                    # test set
+                    else:
+                        test_file.write("%s/%s %d\n" % (class_dir, image, class_label))
+
+                # no test output
+                # put every file in the training set
                 else:
-                    test_file.write("%s/%s %d\n" % (class_dir, image, class_label))
+                    train_file.write("%s/%s %d\n" % (class_dir, image, class_label))
 
-            # no test output
-            # put every file in the training set
-            else:
-                train_file.write("%s/%s %d\n" % (class_dir, image, class_label))
-
-            # increment the count variable
-            count += 1
+                # increment the count variable
+                count += 1
 
         # high verbosity
         if(verbosity == 2):
