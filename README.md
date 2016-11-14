@@ -1,4 +1,4 @@
-# Caffe Image Datbase Prepare
+# Caffe Image Database Prepare
 
 When you download image datasets from the internet, they often come seperated into folders per class.
 
@@ -39,13 +39,14 @@ This will generate a file called `output.txt` containing the path to every image
 
 ### Options
 
-|   Option  | Short Version |  Value | Default    |                                          Meaning                                         |
-|:---------:|:-------------:|:------:|------------|:----------------------------------------------------------------------------------------:|
-|  --train  |       -t      | string | output.txt | The output file for the training set                                                     |
-|   --test  |       -T      | string |   *none*   | The output file for the test set                                                         |
-|  --table  |      -ta      | string |   *none*   | File listing the class tables along with the classnames                                  |
-|  --ration |       -r      |  float |     0.8    | The ration to between training and test set images. Must be between 0 and 1.             |
-| --verbose |       -v      |   int  |      1     | The amount of verbosity. 0 = silent, 1 = output summary (default), 2 = processing output |
+|   Option  | Short Version |  Value | Default    | Meaning                                                                                                |
+|:---------:|:-------------:|:------:|------------|--------------------------------------------------------------------------------------------------------|
+|  --train  |       -t      | string | output.txt | The output file for the training set                                                                   |
+|   --test  |       -T      | string |   *none*   | The output file for the test set                                                                       |
+|  --table  |      -ta      | string |   *none*   | File listing the class tables along with the classnames                                                |
+|  --random |      -ra      | *none* |   *none*   | If set, the images order is randomly shuffled, resulting in different training and test sets each time |
+|  --ratio  |       -r      |  float |     0.8    | The ration to between training and test set images. Must be between 0 and 1.                           |
+| --verbose |       -v      |   int  |      1     | The amount of verbosity. 0 = silent, 1 = output summary (default), 2 = processing output               |
 
 
 ## Examples

@@ -3,6 +3,7 @@
 import argparse
 import math
 import os
+import random
 import sys
 
 
@@ -47,6 +48,7 @@ parser.add_argument("-t", "--train", help="The outputfile for the training set")
 parser.add_argument("-T", "--test", help="The outputfile for the test set")
 parser.add_argument("-r", "--ratio", help="Ration to split between training and test set. Default is 0.8")
 parser.add_argument("-v", "--verbose", default="1", help="Verbose level. 0 - silent, 1 - summary (default), 2 - small step output")
+parser.add_argument("-ra", "--random", action="store_true", help="If set, the images are distributed randomly")
 parser.add_argument("-ta", "--table", help="Output table file which lists the classname to every class label")
 arguments = parser.parse_args()
 
@@ -147,6 +149,10 @@ for class_name in os.listdir(data_path):
 
         # list of class images
         images = os.listdir(class_dir)
+
+        # shuffle the images if random was set
+        if(arguments.random):
+            random.shuffle(images)
 
         # add it to the table file if option was set
         if(table_output):
