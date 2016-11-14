@@ -79,6 +79,9 @@ else:
 if(arguments.test):
     test_output = os.path.abspath(arguments.test)
 
+if(arguments.table):
+    table_output = os.path.abspath(arguments.table)
+
 # split ratio
 if(arguments.ratio):
     try:
@@ -119,7 +122,8 @@ if(arguments.table):
 train_file = open(train_output, 'w')
 if(test_output):
     test_file = open(test_output, 'w')
-table_file = open(table_output, 'w')
+if(table_output):
+    table_file = open(table_output, 'w')
 
 # counters
 class_label = 0
